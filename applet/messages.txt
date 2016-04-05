@@ -1,7 +1,10 @@
-Datacod: un petit logiciel de codage / décodage
-Search4LDP: Un outil de recherche de pages HTML
-XWine: Une interface graphique pour l'émulteur Wine
-Lisp4C: Une bibliothèque de manipulation de liste Lisp en C
-PJEditor: Un petit editeur pour le java
-JPrompteur: Cette petite Applet que vous regardez ;-)
+XWine v0.1.4: Une interface graphique pour l'émulateur Wine (v0.1.4)
+Contact v0.1.2: Un carnet d'adresse fonctionnant sur intranet 
+Search4LDP v0.5: Un outil de recherche de pages HTML
+JPrompteur v0.2: Cette petite Applet que vous regardez ;-)
+JavaFlame v0.1: Une Applet affichant une animation de Flames
+DayTime v0.1.1: Une Applet affichant une horloge analogique
+Lisp4C v1.1: Une bibliothèque de manipulation de liste Lisp en C
+PJEditor v0.1: Un petit editeur pour le java
+Datacod v1.1: un petit logiciel de codage / décodage
 Tous mes logiciels sont sous licence GPL

@@ -1,6 +1,6 @@
 /** 
  * Titre: JPrompteur
- * Version: 0.1
+ * Version: 0.2
  * Description: Permet de faire défiler des messages d'information sur une page
  * Creation: 26/09/2001
  * Modification: 26/09/2001
@@ -37,17 +37,25 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 	Color bcolor;        
 	/** Couleur du texte */
 	Color fcolor;
-       /** texte en cours */
+
+        // Double buffering
+        private Graphics ecran;
+        private Image _ecran;       
+        private Graphics screen;
+        
+        /** texte en cours */
 	int i=0;
-       /** texte d'erreur */
+        /** texte d'erreur */
 	String Error;
 	String ligne="";
 
 	public void init() 
 	{
+                _ecran = createImage(size().width,size().height);
+                ecran = _ecran.getGraphics();
 		// Recup des paramètres
 		titre = getParameter("titre");
-		if (titre == null) { titre = "JPrompteur v0.1, Copyright (c) 2001 - Philippe BOUSQUET, cette Applet est sous licence GPL"; }
+		if (titre == null) { titre = "JPrompteur v0.2, Copyright (c) 2001,2002 - Philippe BOUSQUET, cette Applet est sous licence GPL"; }
 		String col = getParameter("background");
 	    	if (col != null) { bcolor = decodeColor(col); }
 		else { bcolor=Color.blue; }
@@ -56,10 +64,14 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 		else { fcolor=Color.yellow; }
 		// Fichier des messages;
 		String nom=getParameter("fichier");
+		// Fichier des messages;
+		String local=getParameter("local");
 		if (nom != null)
 		{
+                        if (local.compareTo("oui")==0) { nom=getCodeBase().toString() + nom; }
 			try
 			{
+                                
 				URL filein = new URL(nom);
 				BufferedReader fichier = new BufferedReader(new InputStreamReader(filein.openStream()));
 				ligne=fichier.readLine();
@@ -73,19 +85,25 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 				}
 				fichier.close();
 			} 
-			catch (java.io.IOException e) { Error="Probleme d' I/O"; }
-			catch (java.lang.SecurityException e) { Error="Probleme de securité"; }
+			catch (java.io.IOException e) { System.err.println("Probleme d' I/O"); }
+			catch (java.lang.SecurityException e) { System.err.println("Probleme de securité"); }
 		}
 
 		// Initialisations
- 		setBackground(bcolor);
 		Font font = new java.awt.Font("TimesRoman", Font.PLAIN, 20);
-		setFont(font);
+		ecran.setFont(font);
 	}
 
-	public void paint(Graphics g) 
+        private void affiche()
+        {
+                screen.drawImage(_ecran, 0, 0, this);
+        }
+
+	public void ecrit() 
 	{
-    		int y = g.getFont().getSize();
+    		int y = ecran.getFont().getSize();
+                ecran.setColor(bcolor);
+ 		ecran.fillRect(0,0,size().width,size().height);
 		if (x<limite) 
 		{ 
 			if ((message.equals(titre)) && (nblignes > 0))
@@ -95,8 +113,8 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 				if (i>=nblignes) i=0;
 			}
 			else message = titre; 
-		    Dimension d = getSize();
-			FontMetrics fm = g.getFontMetrics();
+		        Dimension d = getSize();
+			FontMetrics fm = ecran.getFontMetrics();
 			limite = -1 * (fm.stringWidth(message) + 15);
 			x=d.width + 15;
 		}
@@ -104,8 +122,9 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 		{
 			x =x-5;
 		}
-		g.setColor(fcolor);
-		g.drawString(message, x, y);
+		ecran.setColor(fcolor);
+		ecran.drawString(message, x, y);
+                affiche();
 	}
 
 	public void start() 
@@ -121,10 +140,11 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 
 	public void run() 
 	{
-		Thread me = Thread.currentThread();
+		screen = getGraphics();
+                Thread me = Thread.currentThread();
 		while (prompteur == me) 
 		{
-			repaint();
+			ecrit();
 			try {Thread.currentThread().sleep(100); }
 			catch (InterruptedException e) {}
 		}
@@ -133,10 +153,10 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 	public String getAppletInfo() 
 	{
 		String retour;
-		retour="Titre: JPrompteur\nVersion: 0.1\n"+
+		retour="Titre: JPrompteur\nVersion: 0.2\n"+
 		"Description: Permet de faire défiler des messages sur une page\n"+
 		"Auteur: Philippe BOUSQUET\n"+
-		"Copyright (c) 2001 - Philippe BOUSQUET\n"+
+		"Copyright (c) 2001,2002 - Philippe BOUSQUET\n"+
 		"Cette Applet est sous licence GENERAL PUBLIC LICENSE\n";
 		return retour;
 	}
@@ -145,10 +165,11 @@ public class JPrompteur extends java.applet.Applet implements Runnable
 	{
 		String pinfo[][] = 
 		{
-			{"titre", "string", "Message d'acceuil"},
-			{"fihcier", "string", "Fichier contenant les messages"},
- 			{"background", "string", "Couleur de fond"},
- 			{"foreground", "string", "Couleur du texte"}
+			{"titre", "string", "Message d'acceuil","ex: 'Bienvenu !!!'"},
+			{"fihcier", "string", "Fichier contenant les messages","ex: 'message.txt'"},
+ 			{"background", "string", "Couleur de fond","ex: '#000000'"},
+ 			{"foreground", "string", "Couleur du texte","ex: '#0000FF'"},
+ 			{"local", "string", "Indique si le fichier est sur le local","ex: 'oui'"}
 		};
 		return pinfo;
 	}

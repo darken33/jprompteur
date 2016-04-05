@@ -1,11 +1,11 @@
 Titre       : JPrompteur
-Version     : 0.1
+Version     : 0.2
 Description : Un panneau de messages pour sites WEB
 Auteur      : Philippe BOUSQUET
 Creation    : 14/10/2001
-Modification: 14/10/2001
+Modification: 15/05/2002
 License     : GNU GENERAL PUBLIC LICENSE
-Copyright   : (c) 2001 - Philippe BOUSQUET
+Copyright   : (c) 2001,2002 - Philippe BOUSQUET
 _________________________________________________________________
 
 PRESENTATION
@@ -26,14 +26,24 @@ INSTALLATION
 	  <param name=background value="couleur du fond">
 	  <param name=foreground value="couleur du texte">
 	  <param name=fichier value="l'URL du fichier message">
+	  <param name=local value="est on en local (oui / nom)">
 	</applet>
 
-	Exemple:
+	Exemple sur site internet:
 	<applet code="JPrompteur.class" width=450 height=30>
 	  <param name=titre value="Bienvenu sur http://darken.tuxfamily.org...">
 	  <param name=background value="#0000FF">
 	  <param name=foreground value="#FFFF00">
 	  <param name=fichier value="http://darken.tuxfamily.org/messages.txt">
+	</applet>
+
+	Exemple utilisation en local:
+	<applet code="JPrompteur.class" width=450 height=30>
+	  <param name=titre value="Test sur local">
+	  <param name=background value="#0000FF">
+	  <param name=foreground value="#FFFF00">
+	  <param name=fichier value="messages.txt">
+	  <param name=local value="oui">
 	</applet>
 
 
