@@ -1,0 +1,62 @@
+Titre       : JPrompteur
+Version     : 0.1
+Description : Un panneau de messages pour sites WEB
+Auteur      : Philippe BOUSQUET
+Creation    : 14/10/2001
+Modification: 14/10/2001
+License     : GNU GENERAL PUBLIC LICENSE
+Copyright   : (c) 2001 - Philippe BOUSQUET
+_________________________________________________________________
+
+PRESENTATION
+============
+	Cette applet a pour but de faire défiler des messages d'informations 
+	sur un site WEB.
+	Ceci est utile si vous voulez faire passer desinformations a vos
+	visiteurs, sans pour cela toucher au code de votre page HTML.
+	En effet les messages d'informations sont positionnés dans un fichier
+	texte independant.
+
+INSTALLATION
+============
+	L'applet s'intègre dans votre page web de la manière suivante:
+
+	<applet code="JPrompteur.class" width=450 height=30>
+	  <param name=titre value="titre d'accueil">
+	  <param name=background value="couleur du fond">
+	  <param name=foreground value="couleur du texte">
+	  <param name=fichier value="l'URL du fichier message">
+	</applet>
+
+	Exemple:
+	<applet code="JPrompteur.class" width=450 height=30>
+	  <param name=titre value="Bienvenu sur http://darken.tuxfamily.org...">
+	  <param name=background value="#0000FF">
+	  <param name=foreground value="#FFFF00">
+	  <param name=fichier value="http://darken.tuxfamily.org/messages.txt">
+	</applet>
+
+
+GARANTIES
+=========
+	ATTENTION: Je ne prend aucune responsabilité sur les dégats
+	encourus lors de l'utilisation cette applet.
+
+LICENSE
+=======
+	Ce logiciel est sous license GPL, Pour plus d'informations
+	consulter la note LICENSE.
+
+AUTRES PROJETS
+==============
+	JPromteur n'est pas mon seul projet, pour en savoir plus
+	veuillez consulter le site http://darken.tuxfamily.org.
+_________________________________________________________________
+
+Philippe BOUSQUET
+229 rue Sainte Catherine,
+33000 BORDEAUX
+FRANCE.
+Tel: (+33) 06.61.99.25.84
+E-mail : Darken@tuxfamily.org
+Site: http://darken.tuxfamily.org
